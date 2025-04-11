@@ -1,14 +1,17 @@
 import {create} from "zustand"
 import { axiosInstance } from "../src/lib/axios.js"
 import toast from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
+
 
 
 const base_url = "http://localhost:3000"
 
 export const useAuthStore = create((set, get) => ({
     userData: null,
-    isCheckingAuth:true,
+    isCheckingAuth: true,
     isRegistering: false,
+    isLoggingIn: false,
     checkAuth: async () => {
       try {
         const response = await axiosInstance.get("/auth/check")
@@ -29,14 +32,42 @@ export const useAuthStore = create((set, get) => ({
             set({userData: response.data})
             toast.success("Account Created Successfully");
             console.log("User Registered:", response.data)
-            navigate("/dashboard");
+            navigate("/login");
         } catch (error) {
             toast.error("Registration failed:", error.response.data.message)
             console.error("Registration failed:", error.response.data.message)
         } finally{
             set({isRegistering: false});
         }
+    },
+    login: async (formData, navigate) => {
+      
+      set({isLoggingIn: true})
+      try {
+        const response = await axiosInstance.post("/auth/login", formData)
+        set({userData: response.data});
+        toast.success("Logged in Successfully");
+        navigate("/");
+
+      } catch (error) {
+        toast.error(error.response.data.message)
+      }finally{
+        set({isLoggingIn: false});
+      }
+    },
+    logout: async () => {
+      try {
+        console.log("receive");
+        await axiosInstance.post("/auth/logout");
+        console.log("sent");
+        set({userData: null});
+        console.log(userData);
+        toast.success("Logged Out Successfully")
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
     }
+
 
 }))
 

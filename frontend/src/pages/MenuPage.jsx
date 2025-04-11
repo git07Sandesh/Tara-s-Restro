@@ -11,12 +11,8 @@ const MenuPage = () => {
     fetchDishes();
   }, [fetchDishes])
   return (
-    <>
+    <div className=' min-h-screen bg-black bg-opacity-50'>
         <Navbar />
-        <div className='flex flex-col justify-center items-center'>
-          <h1 className='inline-block text-center text-blue-700 font-bold text-2xl font-serif m-2 p-4 bg-amber-500'>Top Menu</h1>
-          <h3>Try some of our finest dishes liked by many</h3>
-        </div>
         <TopMenu />
         <div className='flex justify-center items-center'>
         <h1 className='inline-block text-center text-blue-700 font-bold text-2xl font-serif m-2 p-4 bg-amber-500'>Our Full Menu</h1> 
@@ -41,7 +37,7 @@ const MenuPage = () => {
            
          
         )}
-    </>
+    </div>
   )
 }
 

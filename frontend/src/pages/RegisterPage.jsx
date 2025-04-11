@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { FcGoogle } from "react-icons/fc";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
-import axios from 'axios';
 import toast from "react-hot-toast";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
@@ -37,7 +36,7 @@ const RegisterPage = () => {
     }
   }
   return (
-    <div>
+    <div className='min-h-screen bg-black bg-opacity-50'>
         <Navbar />
         <div className='flex flex-col justify-center items-center gap-6 w-full'>
             <h1 
@@ -45,7 +44,7 @@ const RegisterPage = () => {
             <form 
               onSubmit={handleSubmit} 
               action="" 
-              className='flex flex-col w-1/3 justify-center gap-2'>
+              className='flex flex-col w-1/3 border-2 bg-amber-50 border-amber-50 rounded-4xl p-12 justify-center gap-2'>
                 
                 <input 
                   type="text" 
@@ -83,7 +82,7 @@ const RegisterPage = () => {
                   className="block border-amber-500 text-black font-bold bg-amber-500 border-2 rounded-2xl px-6 py-2"
                  >
                   Create Account </button>
-                <span className='text-center text-gray-400'>or Login with:</span>
+                <span className='text-center text-gray-400'>OR:</span>
                 <button className="flex gap-4 justify-center border-amber-500 text-black font-bold border-2 rounded-2xl px-6 py-2"> <FcGoogle /> Login with Google </button>
                 <span>Already have an Account? <Link to={"/login"}>Login Here</Link></span>
             </form>

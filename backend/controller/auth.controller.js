@@ -79,16 +79,18 @@ export const login = async (req,res) => {
     }
 }
 
-export const logout = async (req, res) => {
+export const logout = (req, res) => {
+    console.log("Working here")
     try {
-        //Just reset the cookies and it will automatically logout.
-        res.cookies("jwt", "", {maxAge: 0});
-        res.status(200).json({message: "Logged Out Successfully"})
+    console.log("got it")
+      res.cookie("jwt", "", { maxAge: 0 });
+      res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
-        return res.status(500).json({success: false, message: "Internal server error"})
+    console.log("got error")
+      console.log("Error in logout controller", error.message);
+      res.status(500).json({ message: "Internal Server Error" });
     }
-    
-}
+  }
 
 export const checkAuth = (req, res) => {
     try {

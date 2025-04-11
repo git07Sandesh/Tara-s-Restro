@@ -14,11 +14,14 @@ const menuSchema = new mongoose.Schema(
             type: String,
             required:true
         },
-        image:{
-            type: String,
-            required:true
-        }
-
+        image: {
+            data: Buffer,       // <-- store the raw binary
+            contentType: String // <-- store 'image/png', 'image/jpeg', etc.
+          },
+        featured:{
+            type: Boolean,
+            default: false
+        },
     }, 
     {
         timestamps:true
