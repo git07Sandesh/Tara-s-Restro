@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 
 
-const base_url = "http://localhost:3000"
+const base_url = import.meta.env.MODE === "development" ? "http://localhost:3000/api": "/api"
 
 export const useAuthStore = create((set, get) => ({
     userData: null,

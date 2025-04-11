@@ -7,10 +7,13 @@ import authRoute from "./routes/auth.route.js"
 import cookieParser from "cookie-parser";
 
 import cors from 'cors';
+import path from "path"
 
 
 dotenv.config();
+const PORT = process.env.PORT || 3000
 
+const __dirname = path.resolve();
 const app = express();
 // Add this after initializing express
 app.use(cors({
@@ -23,7 +26,14 @@ app.use(cookieParser());
 
 app.use("/api/menu", menuRoute)
 app.use("/api/auth", authRoute)
-const PORT = process.env.PORT || 3000
+if(process.env.NODE_ENV === "production"){
+  app.use(express.static(path.join(__dirname, "../frontend/dist")))
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
+
+  })
+}
 
 app.listen(PORT, () =>{
     connectDB();
