@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useMenuStore } from '../../store/menu';
 
+
+const base_url = import.meta.env.MODE === "development" 
+  ? "http://localhost:3000" 
+  : import.meta.env.VITE_API_BASE_URL;
+
+
 const TopMenu = () => {
   const fetchFeatured = useMenuStore((state) => state.fetchFeatured);
   const [featuredItems, setFeaturedItems] = useState([]);
@@ -30,10 +36,10 @@ const TopMenu = () => {
               >
                 <div className="relative overflow-hidden rounded-t-xl h-48">
                   <img
-                    src={`http://localhost:3000/api/menu/${item._id}/image`}
-                    alt={item.dishName}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition duration-300"
-                  />
+                      src={`${base_url}/api/menu/${item._id}/image`}
+                      alt={item.dishName}
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition duration-300"
+                    />
                   <span className="absolute top-2 right-2 bg-amber-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md">
                     Featured
                   </span>
