@@ -1,6 +1,6 @@
 import express from "express"
 
-import { checkAuth, login, logout, register } from "../controller/auth.controller.js"
+import { checkAuth, login, logout, register } from "../controllers/auth.controller.js"
 
 import { protectRoute } from "../middleware/auth.middleware.js"
 

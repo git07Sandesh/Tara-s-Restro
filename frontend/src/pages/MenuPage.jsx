@@ -5,6 +5,9 @@ import { useMenuStore } from '../../store/menu'
 import DishCard from '../components/DishCard'
 import { Link } from 'react-router-dom'
 
+
+
+
 const MenuPage = () => {
   const {fetchDishes, dishes} = useMenuStore();
   useEffect(() => {

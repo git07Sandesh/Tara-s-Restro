@@ -1,20 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { useMenuStore } from '../../store/menu.js'
+import React, { useEffect, useState, useRef } from 'react';
+import { useMenuStore } from '../../store/menu.js';
 
-
-// Example AdminPage
 const AdminPage = () => {
   const fileInputRef = useRef(null);
   const { dishes, createDish, fetchDishes, deleteDish, toggleFeaturedDish } = useMenuStore();
 
-  // Keep text fields in one state...
-  const [menuData, setMenuData] = useState({
-    dishName: "",
-    price: "",
-    description: ""
-  });
-
-  // ...and the file input in a separate state.
+  const [menuData, setMenuData] = useState({ dishName: "", price: "", description: "" });
   const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
@@ -23,29 +14,22 @@ const AdminPage = () => {
 
   const handleAddDish = (e) => {
     e.preventDefault();
-
     const { dishName, price, description } = menuData;
     if (!dishName || !price || !description || !imageFile) {
       alert("All fields and an image are required!");
       return;
     }
 
-    // Use FormData to send both text fields and the file to the backend
     const formData = new FormData();
     formData.append("dishName", dishName);
     formData.append("price", price);
     formData.append("description", description);
-    formData.append("image", imageFile); // "image" must match Multer's .single("image")
+    formData.append("image", imageFile);
 
-    // Pass FormData to our store function (which does a POST request)
     createDish(formData);
-
-    // Reset form
-    setMenuData({ dishName: "", price: "", description: ""});
+    setMenuData({ dishName: "", price: "", description: "" });
     setImageFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // Clear the input's value
-    }
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const handleRemoveDish = (dishId) => {
@@ -53,106 +37,95 @@ const AdminPage = () => {
   };
 
   return (
-    <div>
+    <div className="px-6 py-10 max-w-5xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-center text-amber-600">Admin Menu Manager</h1>
+
+      {/* Form */}
       <form 
-        onSubmit={handleAddDish} 
-        className='flex flex-col justify-center items-center gap-3 border-2 rounded-2xl p-4 m-2'
+        onSubmit={handleAddDish}
+        className="bg-white shadow-xl rounded-2xl p-6 mb-10 space-y-6 border border-amber-200"
         encType="multipart/form-data"
       >
-        <label>
-          <span>Dish Name:</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
             type="text"
             placeholder="Dish Name"
             value={menuData.dishName}
-            onChange={(e) =>
-              setMenuData({ ...menuData, dishName: e.target.value })
-            }
-            className='border-2 rounded-3xl border-amber-700 p-2'
+            onChange={(e) => setMenuData({ ...menuData, dishName: e.target.value })}
+            className="border border-amber-400 rounded-xl p-3 w-full focus:ring-2 focus:ring-amber-500"
           />
-        </label>
-        <label>
-          <span>Price:</span>
           <input
             type="number"
-            placeholder="Dish Price"
+            placeholder="Price"
             value={menuData.price}
-            onChange={(e) =>
-              setMenuData({ ...menuData, price: Number(e.target.value) })
-            }
-            className='border-2 rounded-3xl border-amber-700 p-2'
+            onChange={(e) => setMenuData({ ...menuData, price: Number(e.target.value) })}
+            className="border border-amber-400 rounded-xl p-3 w-full focus:ring-2 focus:ring-amber-500"
           />
-        </label>
-        <label>
-          <span>Description:</span>
           <input
             type="text"
-            placeholder="Dish Description"
+            placeholder="Description"
             value={menuData.description}
-            onChange={(e) =>
-              setMenuData({ ...menuData, description: e.target.value })
-            }
-            className='border-2 rounded-3xl border-amber-700 p-2'
+            onChange={(e) => setMenuData({ ...menuData, description: e.target.value })}
+            className="border border-amber-400 rounded-xl p-3 w-full md:col-span-2 focus:ring-2 focus:ring-amber-500"
           />
-        </label>
-        <label>
-  <span>Image:</span>
-  <div className="inline-flex items-center gap-2">
-    <input
-      ref={fileInputRef}
-      type="file"
-      accept="image/*"
-      onChange={(e) => setImageFile(e.target.files[0])}
-      className="hidden"
-    />
-    <button
-      type="button"
-      onClick={() => fileInputRef.current && fileInputRef.current.click()}
-      className="bg-blue-600 text-white px-4 py-2 rounded-md"
-    >
-      {imageFile ? imageFile.name : "Upload Image"}
-    </button>
-  </div>
-</label>
-        <button className='bg-amber-400 p-2 rounded-2xl'>Add Dish</button>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImageFile(e.target.files[0])}
+            className="hidden"
+          />
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            {imageFile ? imageFile.name : "Upload Image"}
+          </button>
+          <button type="submit" className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-xl transition">
+            Add Dish
+          </button>
+        </div>
       </form>
 
-      <div>
-        <h1>Current Dishes</h1>
-        {dishes.length > 0 ? (
-          dishes.map((dish) => (
-            <div className='flex gap-5 p-3 border-2 justify-between' key={dish._id}>
+      {/* Dish Cards */}
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800">Current Dishes</h2>
+      {dishes.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {dishes.map((dish) => (
+            <div key={dish._id} className="bg-white shadow-md rounded-xl p-4 flex gap-4 items-center border relative hover:shadow-lg transition">
               <img
                 src={`http://localhost:3000/api/menu/${dish._id}/image`}
                 alt={dish.dishName}
-                className="size-12 rounded"
+                className="w-20 h-20 rounded-md object-cover border border-amber-300"
               />
-              
-              <p>Name: {dish.dishName}</p>
-              <span>Price: {dish.price}</span>
-              <button
+              <div className="flex-grow">
+                <h3 className="text-lg font-bold text-gray-700">{dish.dishName}</h3>
+                <p className="text-sm text-gray-500 mb-1">{dish.description}</p>
+                <span className="font-semibold text-amber-600">Nrs. {dish.price}</span>
+              </div>
+              <div className="flex flex-col gap-2 items-end">
+                <button
                   onClick={() => toggleFeaturedDish(dish._id, dish.featured)}
-                  className={`border-2 px-2 rounded ${dish.featured ? 'bg-green-500' : 'bg-gray-300'}`}
+                  className={`text-sm px-3 py-1 rounded-full font-semibold shadow-sm transition ${
+                    dish.featured ? "bg-green-500 text-white" : "bg-gray-200 text-gray-800"
+                  }`}
                 >
                   {dish.featured ? "Unfeature" : "Feature"}
                 </button>
-              {/* If your backend serves the image as a URL or Base64 string:
-                  <img src={dish.image} alt="Dish" style={{ width: 100 }} />
-                 If you store binary data, you might need a separate route 
-                 that returns the image. */}
-              
-              <button className='border-2'>Update Dish</button>
-              <button onClick={() => handleRemoveDish(dish._id)} className='border-2'>Delete Dish</button>
+                <button onClick={() => handleRemoveDish(dish._id)} className="text-red-500 hover:underline text-sm">
+                  Delete
+                </button>
+              </div>
             </div>
-          ))
-        ) : (
-          <p>No dish Found</p>
-        )}
-      </div>
-
-      <form>
-        {/* Additional form for featured dish, etc. */}
-      </form>
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-600">No dishes found.</p>
+      )}
     </div>
   );
 };

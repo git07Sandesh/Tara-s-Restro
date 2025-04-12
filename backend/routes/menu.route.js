@@ -1,6 +1,7 @@
 import express from "express";
-import { createDish, deleteDish, getDishes, updateDish, updateFeaturedDish, getDishImage, getFeaturedDish } from "../controller/menu.controller.js";
+import { createDish, deleteDish, getDishes, updateDish, updateFeaturedDish, getDishImage, getFeaturedDish } from "../controllers/menu.controller.js";
 import multer from "multer";
+import { protectAdmin } from "../middleware/protectAdmin.js";
 
 const router = express.Router();
 
@@ -9,12 +10,14 @@ const upload = multer({storage});
 
 
 router.get("/", getDishes)
-router.post("/", upload.single("image"), createDish)
-router.put("/:id", updateDish)
-router.delete("/:id", deleteDish);
-
-router.get("/:id/image", getDishImage);
-router.post("/feature", updateFeaturedDish);
 router.get("/featured", getFeaturedDish)
+router.get("/:id/image", getDishImage);
+
+
+router.post("/", protectAdmin, upload.single("image"), createDish)
+router.put("/:id", protectAdmin, updateDish)
+router.delete("/:id", protectAdmin, deleteDish);
+router.post("/feature", protectAdmin, updateFeaturedDish);
+
 
 export default router
