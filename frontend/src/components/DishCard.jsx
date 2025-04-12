@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useStateContext } from '../context/StateContext.jsx'
 import toast from 'react-hot-toast';
 
-
-
 const base_url = import.meta.env.MODE === "development" 
   ? "http://localhost:3000" 
   : import.meta.env.VITE_API_BASE_URL;
-
 
 const DishCard = ({ dish }) => {
   const { cartItems, setCartItems } = useStateContext();
@@ -52,7 +49,7 @@ const DishCard = ({ dish }) => {
     <div className="card bg-black font-serif text-amber-100 w-auto shadow-sm ">
         <figure className='w-full h-4/6'>
             <img
-            src={`${base_url}/api/menu/${item._id}/image`}
+             src={`${base_url}/api/menu/${dish._id}/image`}
             alt={dish.dishName} className='size-10/12'/>
         </figure>
         <div className="card-body">
