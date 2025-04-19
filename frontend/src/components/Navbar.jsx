@@ -12,10 +12,11 @@ const Navbar = () => {
   return (
     <nav className="container mx-auto px-6 py-6">
       <div className="flex items-center justify-between">
-        <div className="text-amber-500 text-2xl font-bold font-serif">Tara's Restro</div>
+        <div className="text-amber-500 text-2xl font-bold font-serif"><Link to="/">Tara's Restro </Link></div>
         <div className="hidden md:flex space-x-8">
           <Link to="/" className="text-amber-500 text-xl font-extrabold hover:text-gray-300 transition">Home</Link>
           <Link to="/menu" className="text-amber-500 text-xl font-extrabold hover:text-gray-300 transition">Menu</Link>
+          <Link to="/order" className="text-amber-500 text-xl font-extrabold hover:text-gray-300 transition">Order</Link>
           {userData ? (<>
             <Link to="/rewards" className="text-amber-500 text-xl font-extrabold hover:text-gray-300 transition">Rewards</Link>
               <span className="text-amber-500 text-lg font-bold">Hi, <span className="text-amber-400 text-lg font-bold">{userData.name}</span></span>
@@ -27,7 +28,7 @@ const Navbar = () => {
           </>) : (
             <>
               <Link to="/login" className="text-amber-500 text-xl font-extrabold hover:text-gray-300 transition">Login</Link>
-              <Link to="/register" className="bg-amber-500 text-black text-xl font-extrabold px-4 py-2 rounded hover:bg-gray-200 transition">
+              <Link to="/register" className="bg-amber-500 text-black text-xl font-extrabold px-4 py-2 rounded-full hover:bg-gray-200 transition">
                 Register
               </Link>
             </>

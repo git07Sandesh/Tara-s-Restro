@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar';  // Import Navbar
 import About from '../components/About';
 import heroImage from "../assets/abc.jpg"
 import TopMenu from '../components/TopMenu';
+import { Link } from 'react-router-dom';
 
 const Homepage = () => {
   
@@ -31,11 +32,11 @@ const Homepage = () => {
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <button className="bg-amber-500 px-8 py-3 rounded-full text-lg hover:bg-gray-200 text-black transition">
-            View Menu
+            <Link to="/menu">View Menu</Link>
           </button>
           <button className="bg-black px-8 py-3 rounded-full text-lg transform transition hover:scale-105
   shadow-md hover:shadow-xl hover:bg-gray-800 text-white">
-            Reserve place for an Event
+            Reserve Now
           </button>
         </div>
       </div>

@@ -13,6 +13,7 @@ import CheckoutPage from "./pages/CartPage"
 import RewardsPage from "./pages/RewardsPage"
 import CartPage from "./pages/CartPage"
 import AdminPage from "./pages/AdminPage"
+import OrderPage from "./pages/OrderPage"
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
       <Route path="/dashboard" element={userData ? <Dashboard /> : <Navigate to="/register" />} />
       <Route path="/menu" element={<MenuPage />} />
       <Route path="/rewards" element={<RewardsPage />} />
+      <Route path="/order" element={<OrderPage />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/checkout" element={<CheckoutPage />} />
       <Route path="/login" element={<LoginPage />} />

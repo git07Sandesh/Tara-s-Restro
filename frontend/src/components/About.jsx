@@ -1,6 +1,7 @@
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -59,7 +60,7 @@ const About = () => {
 
           {/* Call to Action */}
           <button className="bg-black text-white px-6 py-3 rounded-full text-lg hover:bg-gray-800 transition">
-            Reserve a Table
+            <Link to="/order">Order now </Link>
           </button>
         </div>
       </div>
