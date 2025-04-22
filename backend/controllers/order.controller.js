@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Order from "../models/order.model.js";
 
+
 export const createOrder = async(req, res) => {
     try{
         const {items, total} = req.body;

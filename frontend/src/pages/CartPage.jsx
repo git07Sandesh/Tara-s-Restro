@@ -1,11 +1,28 @@
 import React from "react";
 import { useStateContext } from "../context/StateContext.jsx";
 import Navbar from "../components/Navbar.jsx";
+import { useOrderStore } from "../../store/order.js";
+import toast from "react-hot-toast";
+import { Loader } from "lucide-react";
+
 
 const CartPage = () => {
   const { cartItems } = useStateContext();
   const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   console.log(cartItems)
+
+  const {createOrder, loading, error} = useOrderStore();
+  const handleCheckout = async () => {
+    if(cartItems.length === 0){
+      return toast.error("Cart is empty")
+    }
+    try {
+      await createOrder(cartItems, totalPrice);
+      toast.success("Order Placed Successfully")
+    } catch (error) {
+      toast.error("Failed to place an order")
+    }
+  }
   return (
     <div className='min-h-screen bg-black bg-opacity-50 font-serif text-amber-100'>
       <Navbar />
@@ -33,8 +50,13 @@ const CartPage = () => {
 
           {/* Checkout Button */}
           <div className="flex justify-center mt-4">
-            <button className="bg-amber-500 text-black font-semibold p-4 rounded-lg hover:bg-amber-50">
-              Proceed to Checkout
+            <button className="bg-amber-500 text-black font-semibold p-4 rounded-lg hover:bg-amber-50"
+              onClick={handleCheckout}
+              disabled={loading}>
+              {loading? <div>
+                <Loader className="animate-spin" />
+                <span>Processing...</span>
+                </div>:"Proceed to Checkout"}
             </button>
           </div>
         </div>
