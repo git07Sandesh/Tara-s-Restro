@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar.jsx";
 const CartPage = () => {
   const { cartItems } = useStateContext();
   const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  
+  console.log(cartItems)
   return (
     <div className='min-h-screen bg-black bg-opacity-50 font-serif text-amber-100'>
       <Navbar />
