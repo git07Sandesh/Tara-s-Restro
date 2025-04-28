@@ -7,7 +7,7 @@ import { Loader } from "lucide-react";
 
 
 const CartPage = () => {
-  const { cartItems } = useStateContext();
+  const { cartItems, setCartItems, clearCart} = useStateContext();
   const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   console.log(cartItems)
 
@@ -19,9 +19,36 @@ const CartPage = () => {
     try {
       await createOrder(cartItems, totalPrice);
       toast.success("Order Placed Successfully")
+      clearCart();
+
     } catch (error) {
       toast.error("Failed to place an order")
     }
+  }
+  const handleClearItems = (itemToRemove) => {
+    const newCartItems = cartItems.filter((cartItem) => cartItem._id !== itemToRemove._id);
+    setCartItems(newCartItems);
+  }
+  const increaseQty = (item) => {
+    console.log("clicked")
+    const newCartItems = cartItems.map((cartItem) => {
+      if(cartItem._id === item._id)
+      {
+        return {...cartItem, quantity: cartItem.quantity + 1 }
+      }
+      return cartItem;
+    })
+    setCartItems(newCartItems);
+  }
+  const decreaseQty = (item) => {
+    const newCartItems = cartItems.map((cartItem) => {
+      if(cartItem._id === item._id && cartItem.quantity > 1)
+      {
+        return {...cartItem, quantity: cartItem.quantity - 1}
+      }
+      return cartItem;
+    })
+    setCartItems(newCartItems)
   }
   return (
     <div className='min-h-screen bg-black bg-opacity-50 font-serif text-amber-100'>
@@ -36,7 +63,22 @@ const CartPage = () => {
               <img src={item.image} alt={item.dishName} className="w-20 h-20 object-cover rounded-lg" />
               <div className="flex-1 px-4">
                 <h2 className="text-lg font-serif font-semibold">{item.dishName}</h2>
-                <p className="text-sm text-gray-400">Qty: {item.quantity}</p>
+                
+                {item.quantity < 1 ? <span className="text-sm text-gray-400">Qty: {item.quantity}</span>:
+                <div className="flex gap-2 m-4">
+                  <span className="text-sm text-gray-400">Qty: {item.quantity}</span>
+                  
+                    <button className="bg-amber-500 text-black font-semibold p-2 rounded-lg hover:bg-amber-100"
+                      onClick={() => increaseQty(item)}>+ </button>
+                      
+                    <button className="bg-amber-500 text-black font-semibold p-2 rounded-lg hover:bg-amber-100"
+                      onClick={() => decreaseQty(item)}>- </button>
+                  </div>
+                 }
+              </div>
+              <div className="flex gap-2 m-4">
+                <button className="bg-amber-500 text-red-500 font-sheriff font-semibold p-2 rounded-lg hover:bg-amber-100"
+                  onClick={() => handleClearItems(item)}>Delete </button>
               </div>
               <span className="text-md font-bold">Nrs: {item.price * item.quantity}</span>
             </div>

@@ -41,18 +41,20 @@ const TopMenu = () => {
 
   const getCarouselStyle = (index) => {
     const total = featuredItems.length;
-    const center = currentIndex;
-    const left = (center - 1 + total) % total;
-    const right = (center + 1) % total;
-    const previous = (center - 2 + total) % total;
-    const next = (center + 2) % total;
-
-    if (index === center) return "z-30 scale-110 brightness-100 opacity-100 left-1/2 transform -translate-x-1/2";
-    if (index === left) return "z-20 scale-95 brightness-75 opacity-100 left-1/4 transform -translate-x-1/2";
-    if (index === right) return "z-20 scale-95 brightness-75 opacity-100 left-3/4 transform -translate-x-1/2";
-    if (index === previous) return "z-10 opacity-50 left-0 transform -translate-x-1/2";
-    if (index === next) return "z-10 opacity-50 left-full transform -translate-x-1/2";
-    return "opacity-0 scale-90 pointer-events-none absolute";
+    const distance = (index - currentIndex + total) % total;
+  
+    // Handle wrap-around so that carousel feels infinite
+    const wrappedDistance = distance > total / 2 ? distance - total : distance;
+  
+    if (wrappedDistance === 0) {
+      return "z-30 scale-110 brightness-100 opacity-100 left-1/2 transform -translate-x-1/2";
+    } else if (Math.abs(wrappedDistance) === 1) {
+      return "z-20 scale-100 brightness-90 opacity-100 left-[30%] transform -translate-x-1/2";
+    } else if (Math.abs(wrappedDistance) === 2) {
+      return "z-10 scale-95 brightness-75 opacity-75 left-[70%] transform -translate-x-1/2";
+    } else {
+      return "opacity-0 scale-90 pointer-events-none absolute";
+    }
   };
 
   return (
