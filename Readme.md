@@ -21,16 +21,16 @@ The design uses a warm color palette (**amber**, **black**, and **white**) to ma
 
 ## 🛠️ Technologies Used
 
-- **React.js**  
-- **MongoDB**  
-- **Node.js**  
+- **React.js**
+- **MongoDB**
+- **Node.js**
 - **Express.js**
 
 ---
 
 ## 📞 Contact
 
-- 📍 **Location:** Tokha-03, Kathmandu, Nepal  
+- 📍 **Location:** Tokha-03, Kathmandu, Nepal
 - 📞 **Phone:** +01 4974874
 
 ---
