@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     checkAuth();
   }, []);
-
+  console.log("✅ VITE_API_URL =", import.meta.env.VITE_API_URL);
   if(isCheckingAuth)
   {
     return(
@@ -46,6 +46,7 @@ function App() {
       <Route path="/admin07" element={<AdminPage />} />
     </Routes>
     <Toaster />
+    
     </>
   )
 }

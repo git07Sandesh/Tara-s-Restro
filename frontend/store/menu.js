@@ -1,5 +1,7 @@
 import { create } from "zustand";
-const base_url = import.meta.env.MODE === "development" ? "http://localhost:3000": ""
+const base_url = import.meta.env.MODE === "development"
+  ? "http://localhost:3000"
+  : import.meta.env.VITE_API_URL;
 
 export const useMenuStore = create((set) => ({
   dishes: [],
