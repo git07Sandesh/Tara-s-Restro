@@ -5,7 +5,7 @@ import { X } from 'lucide-react';
 
 const base_url = import.meta.env.MODE === "development" 
   ? "http://localhost:3000" 
-  : import.meta.env.VITE_API_BASE_URL;
+  : import.meta.env.VITE_API_URL;
 
 const TopMenu = () => {
   const fetchFeatured = useMenuStore((state) => state.fetchFeatured);
