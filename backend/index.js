@@ -20,7 +20,7 @@ const __dirname = path.resolve();
 const app = express();
 // Add this after initializing express
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174', 'https://tara-restro.onrender.com', "https://tara-s-restro-admin.onrender.com"],// Frontend URL
+    origin: ['http://localhost:5173', 'http://localhost:5174', 'https://tara-s-restro-backend.onrender.com', "https://tara-s-restro-admin.onrender.com"],// Frontend URL
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE']
   }));
