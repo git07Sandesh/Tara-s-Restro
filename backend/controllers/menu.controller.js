@@ -77,14 +77,25 @@ export const createDish = async (req,res) => {
 
 export const updateDish = async (req,res) => {
     const {id} = req.params
-    const dish = req.body
-
-    if(!mongoose.Types.ObjectId.isValid(id))
-    {
-        return res.status(404).json({success:false, message:"Invalid dish ID"})
-    }
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ success: false, message: "Invalid dish ID" });
+      }
+      const update = {
+        dishName: req.body.dishName,
+        price: req.body.price,
+        description: req.body.description,
+      };
+    
+      // If image is included in the form
+      if (req.file) {
+        update.image = {
+          data: req.file.buffer,
+          contentType: req.file.mimetype,
+        };
+      }
+    
     try {
-        const updatedDish = await Menu.findByIdAndUpdate(id, dish, {new:true})
+        const updatedDish = await Menu.findByIdAndUpdate(id, update, {new:true})
         res.status(200).json({success:true, data:updatedDish})
         
     } catch (error) {
@@ -108,7 +119,7 @@ export const deleteDish = async (req,res) => {
 }
 export const getFeaturedDish = async(req, res) => {
     try {
-        const dishes = await Menu.find({featured: true}). limit(4);
+        const dishes = await Menu.find({featured: true}). limit(20);
         res.status(200).json({success:true, data:dishes});
     } catch (error) {
         res.status(400).json({success: false, message: "Error fettching featured dishes", error})
@@ -120,8 +131,8 @@ export const updateFeaturedDish = async (req,res) => {
         // Might need to change dishId to dish_id
         const {dishId, featured} = req.body;
         const featuredCount = await Menu.countDocuments({featured: true});
-        if(featured && featuredCount >= 4){
-            return res.status(400).json({message:"Only four dishes can be featured"})
+        if(featured && featuredCount >= 20){
+            return res.status(400).json({message:"Maximum of 20 dishes can be featured"})
         }
 
         const updated = await Menu.findByIdAndUpdate(

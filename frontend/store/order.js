@@ -2,7 +2,9 @@ import {create} from "zustand"
 import { axiosInstance } from "../src/lib/axios"
 import axios from "axios"
 
-const base_url = import.meta.env.MODE === "development" ? "http://localhost:3000/api": import.meta.env.VITE_API_URL
+const base_url = import.meta.env.MODE === "development"
+  ? "http://localhost:3000"
+  : import.meta.env.VITE_API_URL;
 
 export const useOrderStore = create((set,get) => ({
     orders:[],

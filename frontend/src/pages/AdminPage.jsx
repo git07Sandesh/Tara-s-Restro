@@ -33,6 +33,7 @@ const AdminPage = () => {
   };
 
   const handleRemoveDish = (dishId) => {
+    console.log("Clicked", dishId);
     deleteDish(dishId);
   };
 

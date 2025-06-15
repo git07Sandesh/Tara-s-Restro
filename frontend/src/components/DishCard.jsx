@@ -10,7 +10,6 @@ const DishCard = ({ dish }) => {
   const { cartItems, setCartItems } = useStateContext();
   const [qty, setQty] = useState(0);
 
-  // Sync quantity with cart and handle removal
   useEffect(() => {
     const cartItem = cartItems.find(item => item._id === dish._id);
     setQty(cartItem ? cartItem.quantity : 1);
@@ -24,7 +23,6 @@ const DishCard = ({ dish }) => {
     
     if (qty <= 0) {
       if (existingItem) {
-        // Remove item from cart
         const updatedCart = cartItems.filter(item => item._id !== dish._id);
         setCartItems(updatedCart);
         toast.success(`${dish.dishName} removed from cart`);
@@ -44,41 +42,51 @@ const DishCard = ({ dish }) => {
     }
   };
 
-
   return (
-    <div className="card bg-black font-serif text-amber-100 w-auto shadow-sm ">
-        <figure className='w-full h-4/6'>
-            <img
-             src={`${base_url}/api/menu/${dish._id}/image`}
-            alt={dish.dishName} className='size-10/12'/>
-        </figure>
-        <div className="card-body">
-            <h2 className="card-title text-2xl font-extrabold">{dish.dishName}</h2>
-            <p className='text-lg text-amber-300'>{dish.description}</p>
-            <div className="flex items-center justify-between mt-4">
-              <span className="text-2xl font-bold text-amber-500 bg-gray-500 px-3 py-1 rounded-md shadow-md">
-                Nrs: {dish.price}
-              </span>
+    <div className="bg-zinc-900 border-2 border-amber-500 text-amber-100 rounded-xl shadow-md hover:shadow-yellow-500/30 transition-all duration-300 overflow-hidden">
+      <figure className="w-full h-96 overflow-hidden rounded-t-xl">
+  <img
+    src={`${base_url}/api/menu/${dish._id}/image`}
+    alt={dish.dishName}
+    className="w-full h-full object-cover object-center"
+  />
+</figure>
 
-              {/* Quantity Selector */}
-              <div className="flex items-center bg-gray-800 px-3 py-1 rounded-full shadow-sm">
-                <button onClick={decQty} className="text-xl px-2 text-red-400 hover:text-red-500">
-                -
-                </button>
-                <span className="text-lg font-bold px-3">{qty}</span>
-                <button onClick={incQty} className="text-xl px-2 text-green-400 hover:text-green-500">
-                +
-                </button>
-              </div>
-            </div>
-            <div className="card-actions mt-4">
-          <button onClick={addToCart} className="btn bg-amber-500 text-black font-semibold w-full rounded-lg">
-            {cartItems.some(item => item._id === dish._id) ? "Update Cart" : "Add to Cart"}
-          </button>
+
+      <div className="p-4 flex flex-col gap-3 bg-white">
+        <h2 className="text-2xl font-extrabold font-serif text-black">{dish.dishName}</h2>
+        <p className="text-xl font-serif text-black">{dish.description}</p>
+
+        <div className="flex items-center justify-between">
+          <span className="text-2xl font-bold text-black">Nrs: {dish.price}</span>
+
+          {/* Quantity Selector */}
+          <div className="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-full shadow-inner">
+            <button
+              onClick={decQty}
+              className="text-xl px-2 text-red-400 hover:text-red-500 font-bold"
+            >
+              –
+            </button>
+            <span className="text-base font-bold">{qty}</span>
+            <button
+              onClick={incQty}
+              className="text-xl px-2 text-green-400 hover:text-green-500 font-bold"
+            >
+              +
+            </button>
+          </div>
         </div>
-        </div>
+
+        <button
+          onClick={addToCart}
+          className="bg-yellow-500 hover:bg-yellow-600 text-black text-xl font-semibold py-2 rounded-lg transition"
+        >
+          {cartItems.some(item => item._id === dish._id) ? "Update Cart" : "Add to Cart"}
+        </button>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default DishCard
+export default DishCard;

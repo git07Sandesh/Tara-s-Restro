@@ -3,14 +3,14 @@ import React from 'react'
 
 const Info = () => {
   return (
-    <section id="info" className="py-20 bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-white">
+    <section id="info" className="py-20 bg-white text-amber-500">
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-3 gap-12 text-center">
           <div className="space-y-4">
             <Clock className="mx-auto" size={40} />
             <h3 className="text-2xl font-bold">Hours</h3>
             <p className="text-lg">
-              Mon-Fri: 9am - 10pm<br />
+              Mon-Fri: 8am - 10pm<br />
               Sat-Sun: 8am - 11pm
             </p>
           </div>
@@ -18,7 +18,7 @@ const Info = () => {
             <MapPin className="mx-auto" size={40} />
             <h3 className="text-2xl font-bold">Location</h3>
             <p className="text-lg">
-              Tokha-03<br />
+              Tokha-03, SundarGaun Pul<br />
               Kathmandu, Nepal
             </p>
           </div>

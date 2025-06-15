@@ -15,7 +15,7 @@ router.get("/:id/image", getDishImage);
 
 
 router.post("/", protectAdmin, upload.single("image"), createDish)
-router.put("/:id", protectAdmin, updateDish)
+router.put("/:id", protectAdmin, upload.single("image"), updateDish)
 router.delete("/:id", protectAdmin, deleteDish);
 router.post("/feature", protectAdmin, updateFeaturedDish);
 

@@ -72,6 +72,7 @@ export const useMenuStore = create((set) => ({
     return { success: true, message: data.message };
   },
   toggleFeaturedDish: async (dishId, currentStatus) => {
+    console.log("Clicked", dishId)
     try {
       const res = await fetch(`${base_url}/api/menu/feature`, {
         method: "POST",

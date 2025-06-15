@@ -5,6 +5,7 @@ import menuRoute from "./routes/menu.route.js"
 import authRoute from "./routes/auth.route.js"
 import adminRoute from "./routes/admin.route.js";
 import orderRoute from "./routes/order.route.js";
+
 import cookieParser from "cookie-parser";
 import cors from 'cors';
 import path from "path"
@@ -20,7 +21,7 @@ const __dirname = path.resolve();
 const app = express();
 // Add this after initializing express
 app.use(cors({
-    origin: ['http://localhost:5173', "https://tara-s-restro.vercel.app",  "https://tara-s-restro-admin.onrender.com"],// Frontend URL
+    origin: ['http://localhost:5173','http://localhost:5174', "https://tara-s-restro.vercel.app",  "https://tara-s-restro-admin.onrender.com"],// Frontend URL
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE']
   }));
@@ -34,6 +35,7 @@ app.use("/api/admin", adminRoute);
 app.use("/api/menu", menuRoute)
 app.use("/api/auth", authRoute)
 app.use("/api/order", orderRoute)
+
 if(process.env.NODE_ENV === "production"){
   app.use(express.static(path.join(__dirname, "../frontend/dist")))
 
