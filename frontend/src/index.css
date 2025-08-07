@@ -1,44 +1,45 @@
-@import "tailwindcss";
-@plugin "daisyui";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Custom CSS for enhanced animations and effects */
-.animate-fade-in {
-  animation: fadeIn 1s ease-in-out;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
+  /* Custom CSS for enhanced animations and effects */
+  .animate-fade-in {
+    animation: fadeIn 1s ease-in-out;
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-}
 
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
 
-/* Custom gradient background */
-.gradient-bg {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-}
+  /* Custom gradient background */
+  .gradient-bg {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  }
 
-/* Glassmorphism effect */
-.glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
+  /* Glassmorphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
 
-/* Custom button hover effects */
-.btn-primary {
-  @apply bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-medium hover:shadow-large;
-}
+  /* Custom button hover effects */
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-medium hover:shadow-large;
+  }
 
-.btn-secondary {
-  @apply bg-transparent border-2 border-white text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 hover:bg-white hover:text-primary-600;
-}
+  .btn-secondary {
+    @apply bg-transparent border-2 border-white text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 hover:bg-white hover:text-primary-600;
+  }
