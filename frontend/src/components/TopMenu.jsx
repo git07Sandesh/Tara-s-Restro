@@ -28,7 +28,7 @@ const TopMenu = () => {
     if (featuredItems.length > 0) {
       const interval = setInterval(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % featuredItems.length);
-      }, 3000);
+      }, 4000);
       return () => clearInterval(interval);
     }
   }, [featuredItems]);
@@ -60,30 +60,35 @@ const TopMenu = () => {
   };
 
   return (
-    <section id="menu" className="py-20 bg-amber-500 text-white">
+    <section id="menu" className="py-20 bg-gradient-to-br from-primary-500 to-primary-600 text-white">
       <div className="container mx-auto px-6">
         {/* Slideshow */}
-        <h2 className="text-5xl font-serif text-center mb-12 text-amber-100 font-bold">
-          Featured Dishes
-        </h2>
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-6xl font-serif text-white mb-4 animate-slide-up">
+            Featured Dishes
+          </h2>
+          <p className="text-white/80 text-xl max-w-2xl mx-auto">
+            Discover our chef's special creations, crafted with the finest ingredients
+          </p>
+        </div>
 
-        <div className="relative w-full flex justify-center items-center h-80 mb-16">
+        <div className="relative w-full flex justify-center items-center h-80 mb-20">
           <div className="relative w-full max-w-6xl h-full flex items-center justify-center">
             {featuredItems.map((item, index) => (
               <div
                 key={item._id}
                 className={`absolute w-72 transition-all duration-700 ease-in-out ${getCarouselStyle(index)}`}
               >
-                <div className="relative w-full h-56 rounded-2xl overflow-hidden shadow-xl border-4 border-amber-300 group">
+                <div className="relative w-full h-56 rounded-2xl overflow-hidden shadow-large border-4 border-white/20 group backdrop-blur-sm">
                   <img
                     src={`${base_url}/api/menu/${item._id}/image`}
                     alt={item.dishName}
-                    className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300">
                     <button
                       onClick={() => openModal(item)}
-                      className="bg-white text-amber-600 font-semibold px-5 py-2 rounded-full shadow-lg hover:bg-amber-100 transition"
+                      className="bg-white text-primary-600 font-semibold px-6 py-3 rounded-full shadow-large hover:bg-primary-50 transition-all transform hover:scale-105"
                     >
                       👀 Preview
                     </button>
@@ -95,42 +100,60 @@ const TopMenu = () => {
         </div>
 
         {/* Quick Order Grid */}
-        <h3 className="text-4xl font-serif text-center mb-10 text-white font-semibold">
-          Quick Order
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="text-center mb-12">
+          <h3 className="text-4xl md:text-5xl font-serif text-white mb-4">
+            Quick Order
+          </h3>
+          <p className="text-white/80 text-lg">
+            Order your favorites with just a few clicks
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredItems.map((dish) => (
-            <div key={dish._id}>
+            <div key={dish._id} className="animate-scale-in">
               <DishCard dish={dish} />
             </div>
           ))}
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Enhanced Modal */}
       <Dialog open={isOpen} onClose={closeModal} className="fixed z-50 inset-0 overflow-y-auto">
         <div className="flex items-center justify-center min-h-screen p-4">
-          <div className="fixed inset-0 bg-black bg-opacity-50" />
-          <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-md p-6 z-10">
-            <button onClick={closeModal} className="absolute top-3 right-3 text-gray-500 hover:text-black">
-              <X />
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" />
+          <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-0 z-10 overflow-hidden animate-scale-in">
+            <button 
+              onClick={closeModal} 
+              className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm rounded-full p-2 text-neutral-600 hover:text-neutral-800 hover:bg-white transition-all"
+            >
+              <X size={20} />
             </button>
             {selectedItem && (
               <>
-                <img
-                  src={`${base_url}/api/menu/${selectedItem._id}/image`}
-                  alt={selectedItem.dishName}
-                  className="w-full h-48 object-cover rounded-lg mb-4"
-                />
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{selectedItem.dishName}</h3>
-                <p className="text-gray-600 mb-4 italic">{selectedItem.description}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-xl font-semibold text-amber-600">
-                    Nrs: {selectedItem.price}
-                  </span>
-                  <button className="bg-amber-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-amber-600 transition">
-                    Order Now
-                  </button>
+                <div className="relative">
+                  <img
+                    src={`${base_url}/api/menu/${selectedItem._id}/image`}
+                    alt={selectedItem.dishName}
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-serif font-bold text-neutral-800 mb-2">
+                    {selectedItem.dishName}
+                  </h3>
+                  <p className="text-neutral-600 mb-6 leading-relaxed">
+                    {selectedItem.description}
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-2xl font-bold text-primary-600">
+                      NPR {selectedItem.price}
+                    </span>
+                    <button className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-full font-medium transition-all transform hover:scale-105 shadow-medium">
+                      Order Now
+                    </button>
+                  </div>
                 </div>
               </>
             )}
